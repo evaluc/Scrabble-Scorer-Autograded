@@ -36,14 +36,37 @@ function initialPrompt() {
    console.log("Let's play some scrabble!");
    let userWord = input.question("Enter a word to score: ");
 
-   console.log(oldScrabbleScorer(userWord));
+   console.log(vowelBonusScorer(userWord));
 };
 
 let newPointStructure;
 
-let simpleScorer;
+function simpleScorer(word){
+   word = word.toUpperCase();
+	let letterPoints = "";
+ for (let i = 0; i < word.length; i++) {
+   let simplePointValue = 1;		
+	letterPoints += `Points for '${word[i]}': ${simplePointValue}\n`
+	  }
+	return letterPoints;
+};
 
-let vowelBonusScorer;
+function vowelBonusScorer(word) {
+   word = word.toUpperCase();
+	let letterPoints = "";
+ for (let i = 0; i < word.length; i++) {
+   let vowels = ["A","E","I","O","U"];
+   let vowelBonusPointValue;
+   //The syntax/logic here isn't working, vowels aren't counted as 3
+   if (word[i].indexOf(vowels) > -1) {
+      vowelBonusPointValue = 3;
+   } else {
+      vowelBonusPointValue = 1;
+   }
+	letterPoints += `Points for '${word[i]}': ${vowelBonusPointValue}\n`
+	  }
+	return letterPoints;
+};
 
 let scrabbleScorer;
 

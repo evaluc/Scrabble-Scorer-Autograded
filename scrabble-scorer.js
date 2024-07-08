@@ -40,6 +40,7 @@ function initialPrompt() {
 };
 
 let newPointStructure;
+//Take note of this declared variable
 
 function simpleScorer(word){
    word = word.toUpperCase();
@@ -69,8 +70,29 @@ function vowelBonusScorer(word) {
 };
 
 let scrabbleScorer;
+//Take note of above declared variable
 
-const scoringAlgorithms = [];
+
+//scoringAlgorithm Objects:
+let simpleScoreObj = {
+   name: "Simple Score",
+   description: "Each letter is worth 1 point.",
+   scorerFunction: simpleScorer()
+};
+
+let vowelBonusScoreObj = {
+   name: "Bonus Vowels",
+   description: "Vowels are 3 pts, consonents are 1 pt.",
+   scorerFunction: vowelBonusScorer()
+};
+
+let scrabbleScoreObj = {
+   name: "The traditional scoring algorithm",
+   description: "The traditional scoring algorithm.",
+   scorerFunction: oldScrabbleScorer()
+};
+
+const scoringAlgorithms = [simpleScoreObj, vowelBonusScoreObj, scrabbleScoreObj];
 
 function scorerPrompt() {}
 

@@ -55,20 +55,21 @@ function simpleScorer(word = "") {
 //simplified simpleScorer function
 
 function vowelBonusScorer(word = "") {
-   wordCased = word.toUpperCase();
-	let letterPoints = "";
- for (let i = 0; i < word.length; i++) {
+   let wordCased = word.toUpperCase();
+   let wordScore = 0;
+   let vowelValue = 3;
+   let consonentValue = 1;
    let vowels = ["A","E","I","O","U"];
-   let vowelBonusPointValue;
-   //The syntax/logic here isn't working, vowels aren't counted as 3
-   if (wordCased[i].indexOf(vowels) > -1) {
-      vowelBonusPointValue = 3;
-   } else {
-      vowelBonusPointValue = 1;
-   }
-	letterPoints += `Points for '${wordCased[i]}': ${vowelBonusPointValue}\n`
-	  }
-	return letterPoints;
+   
+   for (let i = 0; i < wordCased.length; i++) {
+      if (vowels.indexOf(wordCased[i]) === -1) {
+         wordScore += consonentValue;
+      } else if (vowels.indexOf(wordCased[i]) !== -1) {
+         wordScore += vowelValue; 
+      }
+	}
+   
+	return wordScore
 };
 
 let scrabbleScorer;

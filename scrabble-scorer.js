@@ -36,7 +36,7 @@ function initialPrompt() {
    console.log("Let's play some scrabble!");
    let userWord = input.question("Enter a word to score: ");
    //Need to return userWord?
-   console.log(vowelBonusScorer(userWord));
+   return userWord;
 };
 
 let newPointStructure = transform(oldPointStructure);
@@ -52,8 +52,6 @@ function simpleScorer(word = "") {
 	return wordScore
 };
 
-//simplified simpleScorer function
-
 function vowelBonusScorer(word = "") {
    let wordCased = word.toUpperCase();
    let wordScore = 0;
@@ -68,50 +66,71 @@ function vowelBonusScorer(word = "") {
          wordScore += vowelValue; 
       }
 	}
-   
+
 	return wordScore
 };
-
-let scrabbleScorer;
-//Take note of above declared variable
+/*
+function scrabbleScorer(word); {
+   let 
+};
+*/
 
 
 //scoringAlgorithm Objects:
 let simpleScoreObj = {
    name: "Simple Score",
    description: "Each letter is worth 1 point.",
-   scorerFunction: simpleScorer(),
+   scorerFunction: simpleScorer,
 };
 
 let vowelBonusScoreObj = {
    name: "Bonus Vowels",
    description: "Vowels are 3 pts, consonents are 1 pt.",
-   scorerFunction: vowelBonusScorer(),
+   scorerFunction: vowelBonusScorer,
+   //testing remove parentheses from vowelBonusScorer() property
 };
 
 let scrabbleScoreObj = {
    name: "Scrabble",
    description: "The traditional scoring algorithm.",
-   scorerFunction: oldScrabbleScorer(),
+   scorerFunction: oldScrabbleScorer,
 };
 
 const scoringAlgorithms = [simpleScoreObj, vowelBonusScoreObj, scrabbleScoreObj];
 
 function scorerPrompt() {
-   console.log("Which scoring algorithm would you like to use?");
-   console.log(); //insert object literal here accessing the object properties
-   let scoreSelection = input.question("Enter 0, 1, or 2: ");
-   //fill out here to prompt scorer choice, runs after initialPrompt
+   console.log("Which scoring algorithm would you like to use?\n");
+   console.log(`0 - ${scoringAlgorithms[0].name}: ${scoringAlgorithms[0].description}`)
+   console.log(`1 - ${scoringAlgorithms[1].name}: ${scoringAlgorithms[1].description}`)
+   console.log(`2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}`); //insert object literal here accessing the object properties
+   let userSelection = input.question("Enter 0, 1, or 2: ");
+   let scorerSelection = {};
 
-   return //scoring object
+   if (userSelection === "0") {
+      scorerSelection = scoringAlgorithms[0];
+   } else if (userSelection === "1") {
+      scorerSelection = scoringAlgorithms[1];
+   } else if (userSelection === "2") {
+      scorerSelection = scoringAlgorithms[2];
+   } else {
+      scorerSelection = scoringAlgorithms[-1];
+      console.log("Please enter a valid option and try again.")
+   }
+   //maybe we want to use recursion or a while loop here?
+
+   //fill out here to prompt scorer choice, runs after initialPrompt
+   return scorerSelection
 };
 
-function transform() {};
+function transform(object) {
+   transformation = object.map();
+};
 
 function runProgram() {
    // console.log(vowelBonusScoreObj);
-   initialPrompt();
-   //scorerPrompt();
+   let userWord = initialPrompt();
+   let scorer = scorerPrompt();
+   console.log(`Score for '${userWord}': ${scorer.scorerFunction(userWord)}`);
    //Follow up with choosing which algorithm
    //then run the scoring algorithm on the word and print that word
    

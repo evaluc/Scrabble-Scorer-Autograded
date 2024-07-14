@@ -69,11 +69,13 @@ function vowelBonusScorer(word = "") {
 
 	return wordScore
 };
-/*
-function scrabbleScorer(word); {
-   let 
+
+function scrabbleScorer(word) {
+   for (word[i] in newPointStructure) {
+   
+   }
 };
-*/
+
 
 
 //scoringAlgorithm Objects:
@@ -114,7 +116,7 @@ function scorerPrompt() {
       scorerSelection = scoringAlgorithms[2];
    } else {
       scorerSelection = scoringAlgorithms[-1];
-      console.log("Please enter a valid option and try again.")
+      console.log("Please enter a valid option and try again.");
    }
    //maybe we want to use recursion or a while loop here?
 
@@ -123,7 +125,17 @@ function scorerPrompt() {
 };
 
 function transform(object) {
-   transformation = object.map();
+   let oldObject = object;
+   let transformedObj = {};
+   for (key in oldObject) {
+      for (i = 0; i < oldObject[key].length; i++) {
+         let propertyArray = oldObject[key];
+         let newKey = propertyArray[i].toLowerCase();
+         let pointValue = Number(key);
+         transformedObj[newKey] = pointValue;
+      }
+   }
+   return transformedObj
 };
 
 function runProgram() {

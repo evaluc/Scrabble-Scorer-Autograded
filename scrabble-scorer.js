@@ -33,14 +33,14 @@ function oldScrabbleScorer(word = "") {
 // don't change the names or your program won't work as expected. //
 
 function initialPrompt() {
-   console.log("Let's play some scrabble!");
+   console.log("Let's play some Scrabble!\n");
    let userWord = input.question("Enter a word to score: ");
-   //Need to return userWord?
+   
    return userWord;
 };
 
 let newPointStructure = transform(oldPointStructure);
-//Take note of this declared variable, it's an object
+newPointStructure[' '] = 0;
 
 function simpleScorer(word = "") {
    let wordCased = word.toUpperCase();
@@ -107,10 +107,12 @@ function scorerPrompt() {
    console.log("Which scoring algorithm would you like to use?\n");
    console.log(`0 - ${scoringAlgorithms[0].name}: ${scoringAlgorithms[0].description}`)
    console.log(`1 - ${scoringAlgorithms[1].name}: ${scoringAlgorithms[1].description}`)
-   console.log(`2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}`); //insert object literal here accessing the object properties
+   console.log(`2 - ${scoringAlgorithms[2].name}: ${scoringAlgorithms[2].description}`);
+   //TODO: Set up the above lines as a loop through the scoring algorithms array
+
    let userSelection = input.question("Enter 0, 1, or 2: ");
    let scorerSelection = {};
-
+   
    if (userSelection === "0") {
       scorerSelection = scoringAlgorithms[0];
    } else if (userSelection === "1") {
@@ -121,11 +123,24 @@ function scorerPrompt() {
       scorerSelection = scoringAlgorithms[-1];
       console.log("Please enter a valid option and try again.");
    }
-   //maybe we want to use recursion or a while loop here?
 
-   //fill out here to prompt scorer choice, runs after initialPrompt
    return scorerSelection
 };
+
+//Skeleton of inputValidation function, to refactor both prompt functions
+/*
+let inputValidation = function (prompt, isValid) {
+   let userSelection = input.question(prompt);
+
+   while (!isValid(userSelection)) {
+      console.log("Invalid input. Please enter a valid option and try again.");
+      userSelection = input.question(prompt);
+   }
+
+   return userSelection;
+}
+
+*/
 
 function transform(object) {
    let oldObject = object;

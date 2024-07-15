@@ -46,7 +46,7 @@ function simpleScorer(word = "") {
 
    wordScore = wordCased.length * simplePointValue;
 	
-	return wordScore
+	return wordScore;
 };
 
 function vowelBonusScorer(word = "") {
@@ -64,7 +64,7 @@ function vowelBonusScorer(word = "") {
       }
 	}
 
-	return wordScore
+	return wordScore;
 };
 
 function scrabbleScorer(word = "") {
@@ -73,7 +73,7 @@ function scrabbleScorer(word = "") {
    for (let i = 0; i < wordCased.length; i++) {
       wordScore += newPointStructure[wordCased[i]];
    }
-   return wordScore
+   return wordScore;
 };
 
 
@@ -124,7 +124,7 @@ function inputValidation(prompt, isValid) {
 
    while (!isValid(userInput)) {
       let delimiterStr = "+".repeat(60);
-      console.log(`\n${delimiterStr}\nInvalid input. Please enter a valid option and try again.\n${delimiterStr}\n`);
+      console.log(`\n${delimiterStr}\nInvalid input. Please enter a valid option and try again.\n${delimiterStr}`);
       userInput = input.question(prompt);
    }
 
@@ -149,8 +149,15 @@ let areLetters = function(word) {
 };
 
 function isLetter(char) {
-   return char.toUpperCase() != char.toLowerCase(); //For latin alphabets, returns true for letters, and not for symbols/numbers.
+   return char.toUpperCase() != char.toLowerCase(); //For latin alphabets, returns true for letters, and false for symbols/numbers.
 }
+
+let isYesNo = function(char) {
+   if (char === "Y" || char === "N" || char === "y" || char === "n") {
+      return true;
+   }
+   return false;
+};
 
 
 function transform(object) {
@@ -164,20 +171,31 @@ function transform(object) {
          transformedObj[newKey] = pointValue;
       }
    }
-   return transformedObj
+   return transformedObj;
 };
 
 function runProgram() {
-   // console.log(vowelBonusScoreObj);
+   
    let userWord = initialPrompt();
    let scorer = scorerPrompt();
+
    console.log(`\nScore for '${userWord}': ${scorer.scorerFunction(userWord)}`);
-   //Follow up with choosing which algorithm
-   //then run the scoring algorithm on the word and print that word
+   
+   let reRun = 0;
+   while (reRun === 0) {
+      let response = inputValidation("\nWould you like to score another word? Y/N: ", isYesNo);
+      if (response === "Y" || response === "y") {
+         runProgram();
+      } else if (response === "N" || response === "n") {
+         reRun++;
+      }
+      break;
+   }
+
    
 }
 
-//Fixed error preventing anything from running, other small changes
+
 
 
 // Don't write any code below this line //

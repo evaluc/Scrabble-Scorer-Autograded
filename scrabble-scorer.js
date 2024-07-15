@@ -29,12 +29,9 @@ function oldScrabbleScorer(word = "") {
 	return letterPoints;
  }
 
-// your job is to finish writing these functions and variables that we've named //
-// don't change the names or your program won't work as expected. //
-
 function initialPrompt() {
    console.log("Let's play some Scrabble!\n");
-   let userWord = input.question("Enter a word to score: ");
+   let userWord = inputValidation("Enter a word to score: ", areLetters);
    
    return userWord;
 };
@@ -92,7 +89,6 @@ let vowelBonusScoreObj = {
    name: "Bonus Vowels",
    description: "Vowels are 3 pts, consonents are 1 pt.",
    scorerFunction: vowelBonusScorer,
-   //testing remove parentheses from vowelBonusScorer() property
 };
 
 let scrabbleScoreObj = {
@@ -109,7 +105,7 @@ function scorerPrompt() {
       console.log(`${i} - ${scoringAlgorithms[i].name}: ${scoringAlgorithms[i].description}`);
    }
 
-   let userSelection = input.question("Enter 0, 1, or 2: ");
+   let userSelection = inputValidation("\nEnter 0, 1, or 2: ", isValidSelectionNum);
    let scorerSelection = {};
    
    if (userSelection === "0") {
@@ -118,34 +114,43 @@ function scorerPrompt() {
       scorerSelection = scoringAlgorithms[1];
    } else if (userSelection === "2") {
       scorerSelection = scoringAlgorithms[2];
-   } else {
-      scorerSelection = scoringAlgorithms[-1];
-      console.log("Please enter a valid option and try again.");
-   }
+   } 
 
    return scorerSelection
 };
 
-//Skeleton of inputValidation function, to refactor both prompt functions
-
 function inputValidation(prompt, isValid) {
-   let userSelection = input.question(prompt);
+   let userInput = input.question(prompt);
 
-   while (!isValid(userSelection)) {
-      console.log("Invalid input. Please enter a valid option and try again.");
-      userSelection = input.question(prompt);
+   while (!isValid(userInput)) {
+      let delimiterStr = "+".repeat(60);
+      console.log(`\n${delimiterStr}\nInvalid input. Please enter a valid option and try again.\n${delimiterStr}\n`);
+      userInput = input.question(prompt);
    }
 
-   return userSelection;
+   return userInput;
 }
 
-let isInScoringAlgoArray = function(){
+let isValidSelectionNum = function(selectNum) {
+   if (selectNum === "0" || selectNum === "1" || selectNum === "2") {
+      return true;
+   }
 
+   return false;
 };
 
-let isLetters = function(){
-
+let areLetters = function(word) {
+   for (i = 0; i < word.length; i++) {
+      if (isLetter(word[i]) !== true && word[i] !== ' ') {
+         return false;
+      }
+   }
+   return true;
 };
+
+function isLetter(char) {
+   return char.toUpperCase() != char.toLowerCase(); //For latin alphabets, returns true for letters, and not for symbols/numbers.
+}
 
 
 function transform(object) {
@@ -166,7 +171,7 @@ function runProgram() {
    // console.log(vowelBonusScoreObj);
    let userWord = initialPrompt();
    let scorer = scorerPrompt();
-   console.log(`Score for '${userWord}': ${scorer.scorerFunction(userWord)}`);
+   console.log(`\nScore for '${userWord}': ${scorer.scorerFunction(userWord)}`);
    //Follow up with choosing which algorithm
    //then run the scoring algorithm on the word and print that word
    
